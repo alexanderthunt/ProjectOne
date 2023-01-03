@@ -64,6 +64,6 @@ buildNumber.properties
 # Ignore all local history of files
 .history
 .ionide
-.properties
+application.properties
 
 # End of https://www.toptal.com/developers/gitignore/api/maven,java,visualstudiocode

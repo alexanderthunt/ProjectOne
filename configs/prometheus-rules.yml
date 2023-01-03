@@ -1,0 +1,21 @@
+#make sure the container has a copy of this file
+groups:
+- name: example
+  rules:
+
+  - alert: AppDown
+    expr: up == 0
+    for: 5m
+    label:
+      severity: warn
+    annotations:
+      summary: "App is down"
+      description: "Prometheus has detected the application is not running"
+
+  - alert: APIHighLatency:5min
+    expr: #{grafana query expression goes here} > 0.2
+    labels: 
+      severity: warn
+    annotations: 
+      summary: #"5min latency too high"
+      description: #"Planetarium application is taking too long to handle requests in a 5 minute range"
