@@ -21,7 +21,7 @@ public interface PlanetDao extends JpaRepository<Planet,Integer> {
 
         @Transactional
         @Modifying
-        @Query(value = "update planets set name = :planetName , ownerid = :ownerId , planetId = :planetId where id = planetId ", nativeQuery = true)
+        @Query(value = "update planets set name = :planetName , ownerid = :ownerId , id = :planetId where id = planetId ", nativeQuery = true)
         int updatePlanet(@Param("planetName") String planetName, @Param("ownerId") int ownerId, @Param("planetId") int planetId);
 
 }
