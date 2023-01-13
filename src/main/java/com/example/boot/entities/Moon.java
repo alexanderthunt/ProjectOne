@@ -10,7 +10,7 @@ import javax.persistence.Table;
 public class Moon {
 
     @Id
-    @Column(name = "id")
+    @Column(name = "moon_id")
     private int id;
     @Column(name = "name")
     private String moonName;
