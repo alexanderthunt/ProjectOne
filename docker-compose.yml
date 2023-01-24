@@ -3,7 +3,7 @@ version: '3'
 services:
 
   app:
-    image: alexanderhunt/planetarium:file
+    image: alexanderhunt/planetarium:broken
     container_name: app
     ports:
       - 8080:8080

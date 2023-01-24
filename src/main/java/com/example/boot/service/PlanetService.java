@@ -12,7 +12,7 @@ import com.example.boot.repository.PlanetDao;
 
 @Service
 public class PlanetService {
-    
+    int buffer_count = 0;
 
     @Autowired
     private PlanetDao planetDao;
@@ -28,6 +28,13 @@ public class PlanetService {
 
     public Planet findByPlanetName(String name) {
         Optional<Planet> possiblePlanet = this.planetDao.findByPlanetName(name);
+        buffer_count++;
+        if (buffer_count > 4) {
+            try {
+                Thread.sleep(5000, 0);
+            } catch (InterruptedException e) {
+            }
+        }
         if (possiblePlanet.isPresent()) {
             return possiblePlanet.get();
         } else {
