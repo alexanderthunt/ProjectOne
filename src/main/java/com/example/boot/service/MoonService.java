@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.boot.entities.Moon;
+import com.example.boot.entities.MoonThread;
 import com.example.boot.exceptions.EntityNotFound;
 import com.example.boot.repository.MoonDao;
 
@@ -26,6 +27,8 @@ public class MoonService {
     }
     
     public Moon findByMoonName(String name) {
+        MoonThread thread = new MoonThread();
+        thread.start();
         Optional<Moon> possibleMoon = this.moonDao.findByMoonName(name);
         if (possibleMoon.isPresent()) {
             return possibleMoon.get();
