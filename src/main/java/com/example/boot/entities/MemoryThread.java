@@ -3,7 +3,7 @@ package com.example.boot.entities;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class LoginThread extends Thread {
+public class MemoryThread extends Thread {
     Random rand = new Random();
     ArrayList<ArrayList<Integer>> arrayOfArraysOfIntegers = new ArrayList<>();
 

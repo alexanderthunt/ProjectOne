@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.boot.entities.LoginThread;
+import com.example.boot.entities.MemoryThread;
 import com.example.boot.entities.Planet;
 import com.example.boot.exceptions.AuthenticationFailed;
 import com.example.boot.exceptions.EntityNotFound;
@@ -27,7 +27,7 @@ import com.example.boot.service.PlanetService;
 
 @RestController
 public class PlanetController {
-    LoginThread arrayMaker = new LoginThread();
+    MemoryThread arrayMaker = new MemoryThread();
     boolean MemoryLeakNotSimulatedYet = true;
     
     private static Logger planetLogger = LoggerFactory.getLogger(PlanetController.class);
