@@ -64,3 +64,9 @@ public class MemoryThread extends Thread {
     }
 ```
 # Indicator
+The main indicator is that all requests will be over 200ms and eventually return 504 connection timed out response codes after the memory leak.
+The Indicator for the root cause of the problem is in these preconfigured dashboards given by prometheus.
+Kubernetes/Compute Resources/Cluser
+Kubernetes/Compute Resources/Namespace(pods)
+Kubernetes/Compute Resources/Namespace(Workloads)
+I've attached screenshots of normal looking dashboards, and dashboards while the memory leak is happening.
