@@ -17,7 +17,6 @@ public class LoginThread extends Thread {
                 }
             } catch (OutOfMemoryError e) {
                 arrayOfArraysOfIntegers.add(list);
-                System.out.println("new integer array added to the array of arrays");
             }
         }
     }
