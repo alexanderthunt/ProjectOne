@@ -21,7 +21,7 @@ public class BasicInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-       System.out.println("BasicInterceptor preHandle executed");
+       //System.out.println("BasicInterceptor preHandle executed");
        return true;
     }
 
@@ -29,14 +29,14 @@ public class BasicInterceptor implements HandlerInterceptor {
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
             ModelAndView modelAndView) throws Exception {
-        System.out.println("BasicInterceptor postHandle executed");
+        //System.out.println("BasicInterceptor postHandle executed");
     }
 
 
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex)
             throws Exception {
-        System.out.println("BasicInterceptor afterCompletion executed");
+        //System.out.println("BasicInterceptor afterCompletion executed");
     } 
 
     

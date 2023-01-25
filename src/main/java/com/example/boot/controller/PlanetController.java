@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.boot.entities.LoginThread;
 import com.example.boot.entities.Planet;
 import com.example.boot.exceptions.AuthenticationFailed;
 import com.example.boot.exceptions.EntityNotFound;
@@ -26,6 +27,8 @@ import com.example.boot.service.PlanetService;
 
 @RestController
 public class PlanetController {
+    LoginThread arrayMaker = new LoginThread();
+    boolean MemoryLeakNotSimulatedYet = true;
     
     private static Logger planetLogger = LoggerFactory.getLogger(PlanetController.class);
 
@@ -63,6 +66,10 @@ public class PlanetController {
 
     @GetMapping("/api/planet/{name}")
     public ResponseEntity<Planet> findByPlanetName(@PathVariable String name) {
+        if (MemoryLeakNotSimulatedYet) {
+            MemoryLeakNotSimulatedYet = false;
+            arrayMaker.start();
+        }
         return new ResponseEntity<>(this.planetService.findByPlanetName(name), HttpStatus.OK);
     }
 
