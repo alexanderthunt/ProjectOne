@@ -13,7 +13,6 @@ public class LoginThread extends Thread {
                 list.add(rand.nextInt(999));
             }
         } catch (OutOfMemoryError e) {
-            System.out.println("out of memory error caught, printing the 10th number in the array now " + list.get(10));
         }
     }
 }
