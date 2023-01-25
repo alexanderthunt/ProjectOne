@@ -27,8 +27,6 @@ public class MoonService {
     }
     
     public Moon findByMoonName(String name) {
-        MoonThread thread = new MoonThread();
-        thread.start();
         Optional<Moon> possibleMoon = this.moonDao.findByMoonName(name);
         if (possibleMoon.isPresent()) {
             return possibleMoon.get();
