@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.boot.entities.Moon;
-import com.example.boot.entities.MoonThread;
 import com.example.boot.exceptions.EntityNotFound;
 import com.example.boot.repository.MoonDao;
 
