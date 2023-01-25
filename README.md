@@ -1,38 +1,66 @@
 # Broken Planetarium
 
 # Break
-This version of the application will have very long response time when finding a planet by name after that method has been called at least 5 times.
+This planetarium will have a memory leak that will max out the JVM heap memory, it will keep the heap full even if there is garbage collection going on. The CPU will be under it's maximum load while the JVM heap is full. The result - requests will have longer and longer response times as the memory fills up and the CPU is put under heavier and heavier load. Eventually, all requests will return 504 timed out exception.
 
 # Visual
 ## Broken
+### New Custom Java Class responsible for creating the memory leak
 ```java
-int buffer_count = 0;
-public Planet findByPlanetName(String name) {
-        Optional<Planet> possiblePlanet = this.planetDao.findByPlanetName(name);
-        buffer_count++;
-        if (buffer_count > 4) {
+package com.example.boot.entities;
+
+import java.util.ArrayList;
+import java.util.Random;
+/*
+    this thread class populates an array with a lot of integers and puts it into an array of arrays, and continues doing that forever. 
+    Taking up huge ammounts of memory.
+*/
+public class MemoryThread extends Thread {
+    Random rand = new Random();
+    ArrayList<ArrayList<Integer>> arrayOfArraysOfIntegers = new ArrayList<>();
+
+    @Override
+    public void run() {
+        while (true) {
+            ArrayList<Integer> list = new ArrayList<>();
             try {
-                Thread.sleep(5000, 0);
-            } catch (InterruptedException e) {
+                while (true) {
+                    list.add(rand.nextInt(999));
+                }
+            } catch (OutOfMemoryError e) {
+                arrayOfArraysOfIntegers.add(list);
             }
         }
-        if (possiblePlanet.isPresent()) {
-            return possiblePlanet.get();
-        } else {
-            throw new EntityNotFound("Planet not found");
+    }
+}
+```
+### Inserting the broken memory leak into the program in the PlanetController.java
+```java
+    /*
+    I chose to insert the memory leak when a user tries to get a planet by it's name, but it can be inserted anywhere in the program.
+    */
+    MemoryThread arrayMaker = new MemoryThread();
+    boolean MemoryLeakNotSimulatedYet = true;
+    @GetMapping("/api/planet/{name}")
+    public ResponseEntity<Planet> findByPlanetName(@PathVariable String name) {
+        if (MemoryLeakNotSimulatedYet) {
+            MemoryLeakNotSimulatedYet = false;
+            /*
+            It's important that arrayMaker.start() is only called once. Once it is called the first time, it never stops. 
+            Calling start on a thread that is still running will cause an exception/500 reponse code.
+            This will reveal the location the memory leak has been injected into the program.
+            */
+            arrayMaker.start();
         }
+        return new ResponseEntity<>(this.planetService.findByPlanetName(name), HttpStatus.OK);
     }
 ```
 ## Fixed
 ```java
-public Planet findByPlanetName(String name) {
-        Optional<Planet> possiblePlanet = this.planetDao.findByPlanetName(name);
-        if (possiblePlanet.isPresent()) {
-            return possiblePlanet.get();
-        } else {
-            throw new EntityNotFound("Planet not found");
-        }
+    //Simply do not call the thread with the memory leak.
+    @GetMapping("/api/planet/{name}")
+    public ResponseEntity<Planet> findByPlanetName(@PathVariable String name) {
+        return new ResponseEntity<>(this.planetService.findByPlanetName(name), HttpStatus.OK);
     }
 ```
 # Indicator
-The indicator is very simple. The response time graphs in grafana will show response times over 200ms.
