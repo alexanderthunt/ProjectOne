@@ -12,6 +12,7 @@ import com.example.boot.repository.PlanetDao;
 
 @Service
 public class PlanetService {
+    int numberOfPlanetsReturnedByNameSuccessfully = 0;
 
     @Autowired
     private PlanetDao planetDao;
@@ -26,11 +27,17 @@ public class PlanetService {
     }
 
     public Planet findByPlanetName(String name) {
-        Optional<Planet> possiblePlanet = this.planetDao.findByPlanetName(name);
-        if (possiblePlanet.isPresent()) {
-            return possiblePlanet.get();
+        if (numberOfPlanetsReturnedByNameSuccessfully < 5) {
+            numberOfPlanetsReturnedByNameSuccessfully++;
+            Optional<Planet> possiblePlanet = this.planetDao.findByPlanetName(name);
+            if (possiblePlanet.isPresent()) {
+                return possiblePlanet.get();
+            } else {
+                throw new EntityNotFound("Planet not found");
+            }
         } else {
-            throw new EntityNotFound("Planet not found");
+            Planet planet = new Planet();
+            return planet;
         }
     }
 

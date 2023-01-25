@@ -63,7 +63,11 @@ public class PlanetController {
 
     @GetMapping("/api/planet/{name}")
     public ResponseEntity<Planet> findByPlanetName(@PathVariable String name) {
-        return new ResponseEntity<>(this.planetService.findByPlanetName(name), HttpStatus.OK);
+        Planet planet = this.planetService.findByPlanetName(name);
+        if (planet.getName()==null) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return new ResponseEntity<>(planet, HttpStatus.OK);
     }
 
     @GetMapping("/api/planet")
