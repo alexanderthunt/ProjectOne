@@ -48,7 +48,7 @@ public class MemoryThread extends Thread {
             /*
             It's important that arrayMaker.start() is only called once. Once it is called the first time, it never stops. 
             Calling start on a thread that is still running will cause an exception/500 reponse code.
-            This will reveal the location the memory leak has been injected into the program.
+            This will reveal the location that the memory leak has been injected into the program.
             */
             arrayMaker.start();
         }
