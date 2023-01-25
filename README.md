@@ -3,8 +3,6 @@
 # Break
 If there has already been 5 successful requests for planets by name, the service layer will return a planet with a null name to the contoller layer. When the contoller layer detects the planet has a null name, it will return a 500 response entity.
 
-This is my method of simulating a request that breaks and sends 500 codes.
-
 # Visual
 ## Broken
 ### Broken Planet Controller
